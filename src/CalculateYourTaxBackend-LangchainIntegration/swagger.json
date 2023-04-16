@@ -1,0 +1,556 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "TaxCalculator API",
+    "description": "Endpoints for taxcalculator API.",
+    "contact": {
+      "name": "Govind Kumar Mishra"
+    },
+    "version": "1.0.0"
+  },
+  "basePath": "/api",
+  "components": {
+    "schemas": {
+      "IncomeForm": {
+        "type": "object",
+        "properties": {
+          "basicpay": {
+            "type": "number",
+            "required": true,
+            "description": "Basic pay",
+            "example": 10000
+          },
+          "hra": {
+            "type": "number"
+          },
+          "da": {
+            "type": "number"
+          },
+          "lta": {
+            "type": "number"
+          },
+          "cityallowance": {
+            "type": "number"
+          },
+          "miscellaneous": {
+            "type": "number"
+          },
+          "monthlybonus": {
+            "type": "number"
+          },
+          "quaterlybonus": {
+            "type": "number"
+          },
+          "annualbonus": {
+            "type": "number"
+          }
+        }
+      },
+      "Section80C": {
+        "type": "object",
+        "properties": {
+          "ppf": {
+            "type": "number",
+            "description": "PPF (Public Provident Fund) deduction amount"
+          },
+          "elss": {
+            "type": "number",
+            "description": "ELSS (Equity Linked Saving Scheme) deduction amount"
+          },
+          "others": {
+            "type": "number",
+            "description": "Others deductions amount"
+          }
+        }
+      },
+      "Section80D": {
+        "type": "object",
+        "properties": {
+          "yourParentsAge": {
+            "type": "boolean",
+            "description": "Flag to indicate if parents are senior citizens or not."
+          },
+          "parentsHIS": {
+            "type": "number",
+            "description": "Health Insurance Premium paid for parents."
+          },
+          "selfHIS": {
+            "type": "number",
+            "description": "Health Insurance Premium paid for self."
+          }
+        }
+      },
+      "DeductionForm": {
+        "type": "object",
+        "properties": {
+          "section80C": {
+            "$ref": "#/components/schemas/Section80C",
+            "description": "Section 80C deductions",
+            "required": true
+          },
+          "nps": {
+            "type": "number",
+            "description": "NPS (National Pension System) deduction amount",
+            "default": 0
+          },
+          "section80D": {
+            "$ref": "#/components/schemas/Section80D",
+            "description": "Section 80D deductions",
+            "required": true
+          },
+          "section80G": {
+            "type": "number",
+            "description": "Section 80G deductions",
+            "default": 0,
+            "required": true
+          }
+        }
+      },
+      "SalaryComponent": {
+        "type": "object",
+        "properties": {
+          "hra": {
+            "type": "number",
+            "default": 0
+          },
+          "lta": {
+            "type": "number",
+            "default": 0
+          }
+        }
+      },
+      "ExemptionForm": {
+        "type": "object",
+        "properties": {
+          "salaryComponents": {
+            "$ref": "#/components/schemas/SalaryComponent",
+            "required": true
+          }
+        }
+      },
+      "CombinedForm": {
+        "type": "object",
+        "properties": {
+          "incomeForm": {
+            "$ref": "#/components/schemas/IncomeForm",
+            "description": "Income form data",
+            "required": true
+          },
+          "deductionForm": {
+            "$ref": "#/components/schemas/DeductionForm",
+            "description": "Deduction form data",
+            "required": true
+          },
+          "exemptionForm": {
+            "$ref": "#/components/schemas/ExemptionForm",
+            "description": "Exemption form data",
+            "required": true
+          }
+        }
+      },
+      "TaxableIncome": {
+        "type": "object",
+        "properties": {
+          "Gross Annual Income": {
+            "type": "number",
+            "description": "Gross annual income",
+            "example": 10000,
+            "default": 0,
+            "required": true
+          },
+          "Taxable Income": {
+            "type": "number",
+            "description": "Taxable income",
+            "example": 10000,
+            "default": 0,
+            "required": true
+          },
+          "deductions": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "number",
+                "description": "Total deductions",
+                "example": 0,
+                "default": 0,
+                "required": true
+              },
+              "deductions": {
+                "type": "object",
+                "properties": {
+                  "Chapter VI A deductions": {
+                    "type": "number",
+                    "description": "Chapter VI A deductions",
+                    "example": 0,
+                    "default": 0,
+                    "required": true
+                  },
+                  "Exempt Allowances": {
+                    "type": "number",
+                    "description": "Exempt Allowances",
+                    "example": 0,
+                    "default": 0,
+                    "required": true
+                  },
+                  "Standard Deduction": {
+                    "type": "number",
+                    "description": "Standard Deduction",
+                    "example": 0,
+                    "default": 0,
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/calculation/getGrossSalary": {
+      "post": {
+        "tags": [
+          "Calculation"
+        ],
+        "summary": "Get Gross Salary from Income Form",
+        "description": "Use this endpoint to get gross salaries for given income form data.",
+        "operationId": "getGrossSalary",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Income form data",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IncomeForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gross salary",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "grossMonthlySalary": {
+                      "type": "number",
+                      "description": "Gross monthly salary",
+                      "example": 10000,
+                      "default": 0,
+                      "required": true
+                    },
+                    "grossAnnualSalary": {
+                      "type": "number",
+                      "description": "Gross annual salary",
+                      "example": 120000,
+                      "default": 0,
+                      "required": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/calculation/oldRegime/getTaxableIncome": {
+      "post": {
+        "tags": [
+          "Calculation"
+        ],
+        "summary": "Get Taxable Income from Income Form",
+        "description": "Use this endpoint to get taxable income for given income, deductions and exemptions.",
+        "operationId": "getTaxableIncome",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Combined form data",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CombinedForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Taxable income",
+            "schema": {
+              "$ref": "#/components/schemas/TaxableIncome",
+              "example": {
+                "status": "success",
+                "data": {
+                  "Gross Annual Income": 120000,
+                  "Taxable Income": 0,
+                  "deductions": {
+                    "total": 0,
+                    "deductions": {
+                      "Chapter VI A deductions": 0,
+                      "Exempt Allowances": 0,
+                      "Standard Deduction": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/calculation/newRegime/getTaxableIncome": {
+      "post": {
+        "tags": [
+          "Calculation"
+        ],
+        "summary": "Get Taxable Income from Income Form",
+        "description": "Use this endpoint to get new taxable income for given income.",
+        "operationId": "getTaxableIncome",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Combined form data",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CombinedForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Taxable income",
+            "schema": {
+              "$ref": "#/components/schemas/TaxableIncome",
+              "example": {
+                "status": "success",
+                "data": {
+                  "Gross Annual Income": 120000,
+                  "Taxable Income": 0,
+                  "deductions": {
+                    "total": 0,
+                    "deductions": {
+                      "Chapter VI A deductions": 0,
+                      "Exempt Allowances": 0,
+                      "Standard Deduction": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/calculation/getTaxes": {
+      "post": {
+        "tags": [
+          "Calculation"
+        ],
+        "summary": "Get Taxes from combined form data",
+        "description": "Use this endpoint to details of taxes under the new and old regime in combined way.",
+        "operationId": "getTaxes",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Combined form data",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CombinedForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Taxable income",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "newRegimeTax": {
+                      "$ref": "#/components/schemas/TaxableIncome",
+                      "example": {
+                        "Gross Annual Income": 120000,
+                        "Taxable Income": 0,
+                        "deductions": {
+                          "total": 0,
+                          "deductions": {
+                            "Chapter VI A deductions": 0,
+                            "Exempt Allowances": 0,
+                            "Standard Deduction": 0
+                          }
+                        }
+                      }
+                    },
+                    "oldRegimeTax": {
+                      "$ref": "#/components/schemas/TaxableIncome",
+                      "example": {
+                        "Gross Annual Income": 120000,
+                        "Taxable Income": 0,
+                        "deductions": {
+                          "total": 0,
+                          "deductions": {
+                            "Chapter VI A deductions": 0,
+                            "Exempt Allowances": 0,
+                            "Standard Deduction": 0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/formValidation/validateIncomeForm": {
+      "post": {
+        "tags": [
+          "Validation"
+        ],
+        "summary": "Endpoint to validate income form",
+        "description": "This endpoint is used to validate the given income form.",
+        "operationId": "validateIncomeForm",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Income form data",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IncomeForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "error"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "ValidationError"
+                },
+                "formErrors": {
+                  "type": "object",
+                  "properties": {
+                    "basicpay": {
+                      "type": "string",
+                      "example": "Basic Pay cannot be negative or zero"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/formValidation/validateDeductionForm": {
+      "post": {
+        "tags": [
+          "Validation"
+        ],
+        "summary": "Endpoint to validate deduction form",
+        "description": "This endpoint is used to validate the given deduction form.",
+        "operationId": "validateDeductionForm",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Deduction form data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "deductionForm": {
+                  "$ref": "#/components/schemas/DeductionForm"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "schema": {
+              "type": "object",
+              "properties":{
+                "status": {
+                  "type": "string",
+                  "example": "error"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "ValidationError"
+                },
+                "formErrors": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

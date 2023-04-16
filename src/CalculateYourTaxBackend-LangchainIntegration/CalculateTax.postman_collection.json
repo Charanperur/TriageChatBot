@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "37e3dbe9-e01f-4de4-8c79-c0670bdf43b2",
+		"name": "CalculateTax",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14612100"
+	},
+	"item": [
+		{
+			"name": "Calculation",
+			"item": [
+				{
+					"name": "getGrossSalary",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"basicpay\": 12000,\r\n  \"da\": 500,\r\n  \"hra\": 8000,\r\n  \"lta\": 1080,\r\n  \"cityallowance\": 300,\r\n  \"miscellaneous\": 410,\r\n  \"monthlybonus\": 3000,\r\n  \"quaterlybonus\": 16000,\r\n  \"annualbonus\": 36000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/Calculation/getGrossSalary",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"Calculation",
+								"getGrossSalary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTaxes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"incomeForm\": {\r\n    \"basicpay\": 23500,\r\n    \"da\": 0,\r\n    \"hra\": 8500,\r\n    \"lta\": 3000,\r\n    \"cityallowance\": 1083,\r\n    \"miscellaneous\": 910,\r\n    \"monthlybonus\": 12000,\r\n    \"quaterlybonus\": 9000,\r\n    \"annualbonus\": 70000\r\n  },\r\n  \"deductionForm\": {\r\n    \"section80C\": {\r\n      \"ppf\": 15000,\r\n      \"nps\": 49000,\r\n      \"elss\": 2100,\r\n      \"others\": 0\r\n    },\r\n    \"section80D\": {\r\n      \"yourParentsAge\": true,\r\n      \"parentsHIS\": 0,\r\n      \"selfHIS\": 8200\r\n    },\r\n    \"section80G\": 0\r\n  },\r\n  \"exemptionForm\": {\r\n    \"salaryComponents\": {\r\n      \"hra\": 96000,\r\n      \"lta\": 0\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/Calculation/getTaxes",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"Calculation",
+								"getTaxes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getNewTaxableIncome",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"incomeForm\": {\r\n    \"basicpay\": 10000,\r\n    \"hra\": 0,\r\n    \"da\": 0,\r\n    \"lta\": 0,\r\n    \"cityallowance\": 0,\r\n    \"miscellaneous\": 0,\r\n    \"monthlybonus\": 0,\r\n    \"quaterlybonus\": 0,\r\n    \"annualbonus\": 0\r\n  },\r\n  \"deductionForm\": {\r\n    \"section80C\": {\r\n      \"ppf\": 0,\r\n      \"elss\": 0,\r\n      \"others\": 0\r\n    },\r\n    \"nps\": 0,\r\n    \"section80D\": {\r\n      \"yourParentsAge\": true,\r\n      \"parentsHIS\": 0,\r\n      \"selfHIS\": 0\r\n    },\r\n    \"section80G\": 0\r\n  },\r\n  \"exemptionForm\": {\r\n    \"salaryComponents\": {\r\n      \"hra\": 0,\r\n      \"lta\": 0\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/Calculation/oldRegime/getTaxableIncome",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"Calculation",
+								"oldRegime",
+								"getTaxableIncome"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTaxableIncome",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"incomeForm\": {\r\n    \"basicpay\": 5000,\r\n    \"da\": 5,\r\n    \"hra\": 3,\r\n    \"lta\": 3,\r\n    \"cityallowance\": 3,\r\n    \"miscellaneous\": 3,\r\n    \"monthlybonus\": 3,\r\n    \"quaterlybonus\": 2,\r\n    \"annualbonus\": 3\r\n  },\r\n  \"deductionForm\": {\r\n    \"section80C\": {\r\n      \"ppf\": 2,\r\n      \"nps\": 2,\r\n      \"elss\": 2,\r\n      \"others\": 2\r\n    },\r\n    \"section80D\": {\r\n      \"yourParentsAge\": true,\r\n      \"parentsHIS\": 26000,\r\n      \"selfHIS\": 24000\r\n    },\r\n    \"section80G\": 2\r\n  },\r\n  \"exemptionForm\": {\r\n    \"salaryComponents\": {\r\n      \"hra\": 5,\r\n      \"lta\": 1\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/Calculation/oldRegime/getTaxableIncome",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"Calculation",
+								"oldRegime",
+								"getTaxableIncome"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validation",
+			"item": [
+				{
+					"name": "getTaxes Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"incomeForm\": {\r\n    \"basicpay\": 23500,\r\n    \"da\": 0,\r\n    \"hra\": 8500,\r\n    \"lta\": 3000,\r\n    \"cityallowance\": 1083,\r\n    \"miscellaneous\": 910,\r\n    \"monthlybonus\": 12000,\r\n    \"quaterlybonus\": 9000,\r\n    \"annualbonus\": 70000\r\n  },\r\n  \"deductionForm\": {\r\n    \"section80C\": {\r\n      \"ppf\": 15000,\r\n      \"nps\": 49000,\r\n      \"elss\": 2100,\r\n      \"others\": 0\r\n    },\r\n    \"section80D\": {\r\n      \"yourParentsAge\": true,\r\n      \"parentsHIS\": 0,\r\n      \"selfHIS\": 8200\r\n    },\r\n    \"section80G\": 0\r\n  },\r\n  \"exemptionForm\": {\r\n    \"salaryComponents\": {\r\n      \"hra\": 96000,\r\n      \"lta\": 0\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/Calculation/getTaxes",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"Calculation",
+								"getTaxes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incomeformValidation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"basicpay\": 23500,\r\n    \"da\": 0,\r\n    \"hra\": 8500,\r\n    \"lta\": 3000,\r\n    \"cityallowance\": 1083,\r\n    \"miscellaneous\": 910,\r\n    \"monthlybonus\": 12000,\r\n    \"quaterlybonus\": 9000,\r\n    \"annualbonus\": 70000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/formValidation/incomeForm",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"formValidation",
+								"incomeForm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deductionformValidation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"deductionForm\": {\r\n     \"section80C\": {\r\n      \"ppf\": 15000,\r\n      \"elss\": 2100,\r\n      \"others\": 0\r\n    },\r\n    \"nps\": 51000,\r\n    \"section80D\": {\r\n      \"yourParentsAge\": true,\r\n      \"parentsHIS\": 0,\r\n      \"selfHIS\": 8200\r\n    },\r\n    \"section80G\": 0\r\n   }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/formValidation/validateDeductionForm",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"formValidation",
+								"validateDeductionForm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "exemptionformValidation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"incomeForm\":{\r\n        \"basicpay\": 0,\r\n    \"da\": 0,\r\n    \"hra\": 8500,\r\n    \"lta\": 3000,\r\n    \"cityallowance\": 1083,\r\n    \"miscellaneous\": 910,\r\n    \"monthlybonus\": 12000,\r\n    \"quaterlybonus\": 9000,\r\n    \"annualbonus\": 70000\r\n    },\r\n   \"exemptionForm\": {\r\n    \"salaryComponents\": {\r\n      \"hra\": 96000,\r\n      \"lta\": 0\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/formValidation/validateExemptionForm",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"formValidation",
+								"validateExemptionForm"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ChatBot",
+			"item": [
+				{
+					"name": "AskQuestion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"question\":\"Who is Nirmala Sitharaman?\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env}}/api/chatbot/askQuestion",
+							"host": [
+								"{{env}}"
+							],
+							"path": [
+								"api",
+								"chatbot",
+								"askQuestion"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "env",
+			"value": "localhost:3000",
+			"type": "string"
+		}
+	]
+}

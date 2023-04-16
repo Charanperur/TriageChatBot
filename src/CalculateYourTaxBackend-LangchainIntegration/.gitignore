@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Logs, build output, coverage reports
+logs/
+build/
+coverage/
+
+# Environment variables
+.env
+.env.*
+
+# Miscellaneous
+*.DS_Store
+Thumbs.db
